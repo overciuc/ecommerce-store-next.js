@@ -1,3 +1,8 @@
+import camelcaseKeys from 'camelcase-keys';
+import dotenvSafe from 'dotenv-safe';
+import postgres from 'postgres';
+
+/*
 export const products = [
   {
     id: '1',
@@ -175,3 +180,25 @@ export const products = [
     price: '€ 31.99',
   },
 ];
+*/
+dotenvSafe.config();
+
+const sql = postgres();
+
+export async function getProducts() {
+  const products = await sql`SELECT * FROM products`;
+  return products.map((product) => camelcaseKeys(product));
+}
+
+export async function getProductById(id) {
+  const products = await sql`
+    SELECT
+      *
+    FROM
+      products
+    WHERE
+      id = ${id}
+    `;
+  return products.map((product) => camelcaseKeys(product))[0];
+}
+// const allProducts = await getProducts();
