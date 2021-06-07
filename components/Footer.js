@@ -180,16 +180,16 @@ export default function Footer() {
           <h3>Our Store</h3>
           <ul>
             <li>
-              <a href="#1">Clothing</a>
+              <a href="../products/clothingPage">Clothing</a>
             </li>
             <li>
-              <a href="#1">Accessories</a>
+              <a href="../products/accessories">Accessories</a>
             </li>
             <li>
-              <a href="#1">Books</a>
+              <a href="../products/books">Books</a>
             </li>
             <li>
-              <a href="#1">Toys</a>
+              <a href="../products/toys">Toys</a>
             </li>
           </ul>
         </div>
@@ -197,16 +197,18 @@ export default function Footer() {
           <h3>Quick Links</h3>
           <ul>
             <li>
-              <a href="#1">Home</a>
+              <a href="../" passHref>
+                Home
+              </a>
             </li>
             <li>
-              <a href="#1">About</a>
+              <a href="../about">About</a>
             </li>
             <li>
-              <a href="#1">Blog</a>
+              <a href="../products/blog">Blog</a>
             </li>
             <li>
-              <a href="#1">Shop</a>
+              <a href="../products/allProductPage">Shop</a>
             </li>
           </ul>
         </div>
