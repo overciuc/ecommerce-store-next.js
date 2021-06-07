@@ -315,7 +315,7 @@ export default function Home(props) {
                 <a>
                   <span>
                     <Image
-                      src={product.image}
+                      src={product.productImage}
                       alt="Product"
                       width={100}
                       height={100}
@@ -324,7 +324,7 @@ export default function Home(props) {
                   <span>
                     <h2>{product.productName}</h2>
                   </span>
-                  <span>{product.price}</span>
+                  <span>&#x20AC; {product.price}</span>
                 </a>
               </Link>
               <span>
@@ -356,7 +356,9 @@ export async function getServerSideProps() {
   //
   // import { users } from '../../util/database';
 
-  const { products } = await import('../util/database');
+  const { /* products */ getProducts } = await import('../util/database');
+
+  const products = await getProducts();
 
   // This console.log doesn't show up in the browser
   //
