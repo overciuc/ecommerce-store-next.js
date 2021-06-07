@@ -39,24 +39,3 @@ export default function About() {
     </Layout>
   );
 }
-
-export async function getServerSideProps() {
-  // This will cause an error (you cannot
-  // import like this in a function):
-  //
-  // import { users } from '../../util/database';
-
-  const { products } = await import('../util/database');
-
-  // This console.log doesn't show up in the browser
-  //
-  // It will ONLY show up in Node.js (because this
-  // code is ONLY running on the server)
-  console.log('products', products);
-
-  return {
-    props: {
-      products: products,
-    },
-  };
-}
