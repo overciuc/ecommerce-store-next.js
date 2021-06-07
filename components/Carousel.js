@@ -135,7 +135,7 @@ export default function CarouselArea(props) {
     </div>
   );
 }
-
+/*
 export async function getServerSideProps() {
   // This will cause an error (you cannot
   // import like this in a function):
@@ -156,3 +156,4 @@ export async function getServerSideProps() {
     },
   };
 }
+*/
