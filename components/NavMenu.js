@@ -4,6 +4,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import { faSearch, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { parseCookieValue } from '../util/cookies';
 
 config.autoAddCss = false;
 
@@ -97,7 +98,6 @@ export default function NavMenu() {
         <span css={[navBarButtonStyle, marginLeft]}>
           <Link href="/products/basket">
             <a>
-              &#8364; 0.00 &nbsp;
               <FontAwesomeIcon icon={faShoppingBasket} css={faIconStyle} />
             </a>
           </Link>
@@ -111,3 +111,23 @@ export default function NavMenu() {
     </div>
   );
 }
+/*
+// Create connection to database
+export async function getServerSideProps(context) {
+  // productId comes from the file name [productId].js
+  console.log(context.query);
+  const productId = context.query.productId;
+  console.log('---productId---', productId);
+  console.log('---cookies---', context.req.cookies);
+  const { products } = await import('../util/database');
+  const product = products.find((p) => p.id === productId);
+
+  return {
+    props: {
+      product: product,
+      // Passing a cookie value as a prop
+      quantity: parseCookieValue(context.req.cookies.quantity) || [],
+    },
+  };
+}
+*/
