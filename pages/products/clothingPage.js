@@ -96,7 +96,7 @@ export default function ClothingPage(props) {
                 <Link href={`/products/${sortedProduct.id}`}>
                   <a>
                     <span>
-                      <img src={sortedProduct.image} alt="Product" />
+                      <img src={sortedProduct.productImage} alt="Product" />
                     </span>
                     <span>
                       <h2>{sortedProduct.productName}</h2>
@@ -123,7 +123,9 @@ export async function getServerSideProps() {
   //
   // import { users } from '../../util/database';
 
-  const { products } = await import('../../util/database');
+  const { /* products */ getProducts } = await import('../../util/database');
+
+  const products = await getProducts();
 
   // This console.log doesn't show up in the browser
   //

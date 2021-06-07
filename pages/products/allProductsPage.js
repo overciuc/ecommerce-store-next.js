@@ -124,7 +124,9 @@ export async function getServerSideProps() {
   //
   // import { users } from '../../util/database';
 
-  const { products } = await import('../../util/database');
+  const { /* products */ getProducts } = await import('../../util/database');
+
+  const products = await getProducts();
 
   // This console.log doesn't show up in the browser
   //

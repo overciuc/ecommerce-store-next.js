@@ -8,6 +8,7 @@ import Layout from '../../components/Layout';
 import NavMenu from '../../components/NavMenu';
 import {
   getBasketCookieValue,
+  parseCookieValue,
   toggleAddedProductByProductId,
 } from '../../util/cookies';
 
@@ -206,6 +207,10 @@ const carouselBG = css`
   z-index: -1;
 `;
 
+const euroSignSize = css`
+  font-size: 25px;
+`;
+
 export default function SingleProduct(props) {
   const [addToBasket, setAddToBasket] = useState(getBasketCookieValue());
   return (
@@ -217,19 +222,24 @@ export default function SingleProduct(props) {
 
       <section css={productGrid}>
         <span>
-          <img src={props.product.image} alt="product" />
+          {' '}
+          <img src={props.product.productImage} alt="product" />{' '}
         </span>
         <span>
           <h1>{props.product.productName}</h1>
-          <p>{props.product.price}</p>
+          <p>
+            <span css={euroSignSize}>&#x20AC; </span>
+            {props.product.price}
+          </p>
           <p>
             <span>
               Including 20% VAT, <a href="#1">plus shipping costs</a>
             </span>
           </p>
-          <p>{props.product.short_description}</p>
+          <p>{props.product.productShortDescription}</p>
           <button
             onClick={() => {
+              getBasketCookieValue(props.product.id);
               setAddToBasket(toggleAddedProductByProductId(props.product.id));
             }}
           >
@@ -242,7 +252,7 @@ export default function SingleProduct(props) {
       <section css={descriptionContainer}>
         <div>
           <h5>Description:</h5>
-          <p> {props.product.description}</p>
+          <p> {props.product.productDescription}</p>
         </div>
       </section>
 
@@ -307,13 +317,15 @@ export async function getServerSideProps(context) {
   const productId = context.query.productId;
   console.log('productId', productId);
 
-  const { products } = await import('../../util/database');
+  const { /* products */ getProductById } = await import('../../util/database');
 
-  const product = products.find((p) => p.id === productId);
+  const product = await getProductById(productId);
+  /* products.find((p) => p.id === productId); */
 
   return {
     props: {
       product: product,
+      quantity: parseCookieValue(context.req.cookies.quantity) || [],
     },
   };
 }

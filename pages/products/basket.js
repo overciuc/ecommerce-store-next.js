@@ -137,10 +137,13 @@ export default function Basket(props) {
             {getBasketCookieValue().map((productId) => (
               <tr key={productId}>
                 <td>
-                  <img src={getProductById(productId).image} alt="product" />
+                  <img
+                    src={getProductById(productId).productImage}
+                    alt="product"
+                  />
                 </td>
                 <td>{getProductById(productId).productName}</td>
-                <td>{getProductById(productId).shortDescription}</td>
+                <td>{getProductById(productId).productShortDescription}</td>
                 <td>
                   <span css={counter}>
                     <button
@@ -185,7 +188,9 @@ export async function getServerSideProps() {
   //
   // import { users } from '../../util/database';
 
-  const { products } = await import('../../util/database');
+  const { /* products */ getProducts } = await import('../../util/database');
+
+  const products = await getProducts();
 
   // This console.log doesn't show up in the browser
   //
