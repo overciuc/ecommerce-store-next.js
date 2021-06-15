@@ -122,19 +122,10 @@ export default function Books(props) {
 }
 
 export async function getServerSideProps() {
-  // This will cause an error (you cannot
-  // import like this in a function):
-  //
-  // import { users } from '../../util/database';
-
-  const { /* products */ getProducts } = await import('../../util/database');
+  const { getProducts } = await import('../../util/database');
 
   const products = await getProducts();
 
-  // This console.log doesn't show up in the browser
-  //
-  // It will ONLY show up in Node.js (because this
-  // code is ONLY running on the server)
   console.log('products', products);
 
   return {

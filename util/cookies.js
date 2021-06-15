@@ -2,60 +2,34 @@ import cookies from 'js-cookie';
 
 export function getBasketCookieValue() {
   const cookieValue = cookies.getJSON('addToBasket');
-  return Array.isArray(cookieValue) ? cookieValue : [];
+  return typeof cookieValue === 'object' ? cookieValue : {};
 }
 
-export function toggleAddedProductByProductId(productId) {
+export function toggleAddedProductByProductId(productId, quantity) {
   const previousCookieValue = getBasketCookieValue();
+  // unpack the object into array
+  const unpacked = Object.entries(previousCookieValue);
 
   let newCookieValue;
-  if (previousCookieValue.includes(productId)) {
-    newCookieValue = previousCookieValue.filter((pid) => pid !== productId);
+  if (productId in previousCookieValue) {
+    previousCookieValue[productId] += quantity;
+    newCookieValue = { ...previousCookieValue };
   } else {
-    newCookieValue = [...previousCookieValue, productId];
+    // TODO: how to correctly set the int product id as key in this object via state
+    unpacked.push([productId, quantity]);
+    // pack as object
+    const newObject = Object.fromEntries(unpacked);
+    newCookieValue = newObject;
   }
 
   cookies.set('addToBasket', newCookieValue);
   return newCookieValue;
 }
-export function parseCookieValue(value) {
-  try {
-    return JSON.parse(value);
-  } catch (err) {
-    return undefined;
-  }
-}
-/*
-import cookies from 'js-cookie';
 
-export function getQuantityCookieValue() {
-  const cookieValue = cookies.getJSON('quantity');
-  // Test if cookie value is an array
-  return Array.isArray(cookieValue)
-    ? // if it is, return the array value
-      cookieValue
-    : // if it's not, return an empty array
-      [];
-}
-
-export function addItemByProductId(id) {
-  // newCookieValue is the decoded version of whatever is inside the cookie; currently an array
-  const newCookieValue = [...getQuantityCookieValue()];
-
-  const quantityItemInCookie = newCookieValue.find(
-    (qantityItem) => qantityItem.id === id,
-  );
-
-  if (quantityItemInCookie) {
-    quantityItemInCookie.quantity = quantityItemInCookie.quantity + 1;
-  } else {
-    newCookieValue.push({
-      id: id,
-      quantity: 1,
-    });
-  }
-
-  cookies.set('quantity', newCookieValue);
+export function updateProductQuantityInCookie(productId, quantity) {
+  const cookieValue = getBasketCookieValue();
+  cookieValue[productId] = quantity;
+  cookies.set('addToBasket', cookieValue);
 }
 
 export function parseCookieValue(value) {
@@ -65,4 +39,3 @@ export function parseCookieValue(value) {
     return undefined;
   }
 }
-*/

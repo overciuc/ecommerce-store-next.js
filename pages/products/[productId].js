@@ -1,23 +1,13 @@
-import 'react-multi-carousel/lib/styles.css';
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import { useState } from 'react';
-import Carousel from 'react-multi-carousel';
 import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
 import NavMenu from '../../components/NavMenu';
 import {
   getBasketCookieValue,
-  parseCookieValue,
   toggleAddedProductByProductId,
 } from '../../util/cookies';
-
-const pageContainer = css`
-  max-width: 1300px;
-  width: 100%;
-  justify-content: center;
-  margin: auto;
-`;
 
 const productGrid = css`
   max-width: 1300px;
@@ -34,7 +24,7 @@ const productGrid = css`
   > span {
     text-align: right;
     margin-left: 24px;
-    width: 400px;
+    width: 450px;
     padding: 20px 40px;
     display: block;
   }
@@ -42,9 +32,9 @@ const productGrid = css`
   > span > img {
     padding: 20px;
 
-    max-width: 300px;
-    max-height: 300px;
-
+    max-width: 600px;
+    max-height: 600px;
+    padding-right: 50px;
     text-align: center;
   }
 
@@ -95,6 +85,10 @@ const productGrid = css`
     border-radius: 25px;
     border: none;
     font-size: 24px;
+    cursor: pointer;
+    :hover {
+      background-color: #6c0075;
+    }
   }
   > div {
     text-align: left;
@@ -128,91 +122,55 @@ const descriptionContainer = css`
   }
 `;
 
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-    slidesToSlide: 3, // optional, default to 1.
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-    slidesToSlide: 2, // optional, default to 1.
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-    slidesToSlide: 1, // optional, default to 1.
-  },
-};
-
-const sliderContainer = css`
-  display: flex;
-  position: relative;
-  max-width: 1300px;
-  width: 100%;
-  justify-content: space-between;
-`;
-
-const carouselDivStyle = css`
-  display: block;
-  width: 300px;
-  height: 350px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0px 0px 5px #a8a8a8;
-  padding: 15px 20px;
-  margin-bottom: 50px;
-  margin-top: 50px;
-  background-color: #fff;
-  justify-content: center;
-  text-align: center;
-  > img {
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 10px;
-    max-width: 150px;
-    max-height: 150px;
-    margin-top: 15px;
-  }
-
-  > p {
-    text-align: center;
-  }
-
-  > h4 {
-    text-align: center;
-    font-family: 'Gorditas', cursive;
-  }
-`;
-
-const bottomMargin = css`
-  margin-bottom: 50px;
-`;
-
-const headingStyle = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Gorditas', cursive;
-  color: #9b5de5;
-  font-size: 40px;
-  padding-top: 30px;
-`;
-
-const carouselBG = css`
-  background-color: rgba(254, 228, 64, 0.5);
-  width: 100%;
-  height: 600px;
-  z-index: -1;
-`;
-
 const euroSignSize = css`
   font-size: 25px;
 `;
 
+const counter = css`
+  width: 100px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+
+  > input {
+    width: 50px;
+    border: none;
+    font-size: 16px;
+    text-align: center;
+    color: gray;
+    appearance: none;
+  }
+  > button {
+    display: block;
+    font-size: 25px;
+    padding: 0 10px;
+    cursor: pointer;
+    color: #0052cc;
+    user-select: none;
+    border: none;
+  }
+`;
+
 export default function SingleProduct(props) {
+  const [generalPrice, setGeneralPrice] = useState(props.product.price);
+
+  const [quantity, setQuantity] = useState(1);
+
+  const [totalPrice, setTotalPrice] = useState(generalPrice);
+
   const [addToBasket, setAddToBasket] = useState(getBasketCookieValue());
+
+  function incrementQuantity() {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+    setTotalPrice((prevPrice) => prevPrice + generalPrice);
+  }
+  function decrementQuantity() {
+    setQuantity((prevQuantity) => prevQuantity - 1);
+    setTotalPrice((prevPrice) => prevPrice - generalPrice);
+  }
+
   return (
     <Layout>
       <Head>
@@ -222,14 +180,32 @@ export default function SingleProduct(props) {
 
       <section css={productGrid}>
         <span>
-          {' '}
-          <img src={props.product.productImage} alt="product" />{' '}
+          <img src={props.product.productImage} alt="product" />
         </span>
         <span>
           <h1>{props.product.productName}</h1>
           <p>
             <span css={euroSignSize}>&#x20AC; </span>
-            {props.product.price}
+            {(props.product.price * quantity).toFixed(2)}
+
+            <span css={counter}>
+              <button
+                onClick={() => {
+                  decrementQuantity();
+                }}
+              >
+                -
+              </button>
+              <input value={quantity} min="1" defaultValue={1} />
+
+              <button
+                onClick={() => {
+                  incrementQuantity();
+                }}
+              >
+                +
+              </button>
+            </span>
           </p>
           <p>
             <span>
@@ -237,15 +213,18 @@ export default function SingleProduct(props) {
             </span>
           </p>
           <p>{props.product.productShortDescription}</p>
+
           <button
             onClick={() => {
-              getBasketCookieValue(props.product.id);
-              setAddToBasket(toggleAddedProductByProductId(props.product.id));
+              getBasketCookieValue();
+              setAddToBasket(
+                toggleAddedProductByProductId(props.product.id, quantity),
+              );
             }}
           >
-            {addToBasket.includes(props.product.id)
-              ? 'Remove from basket'
-              : 'Add to basket'}
+            {props.product.id in addToBasket
+              ? 'Remove from Basket'
+              : 'Add to Basket'}
           </button>
         </span>
       </section>
@@ -256,76 +235,24 @@ export default function SingleProduct(props) {
         </div>
       </section>
 
-      <div css={carouselBG}>
-        <section css={pageContainer}>
-          <h1 css={headingStyle}>Related Products</h1>
-          <div css={bottomMargin}>
-            <Carousel
-              swipeable={false}
-              draggable={false}
-              showDots={true}
-              responsive={responsive}
-              ssr={true} // means to render carousel on server-side.
-              infinite={true}
-              autoPlay={props.deviceType !== 'mobile' ? true : false}
-              autoPlaySpeed={1000}
-              keyBoardControl={true}
-              customTransition="all .5"
-              transitionDuration={500}
-              containerClass={sliderContainer}
-              removeArrowOnDeviceType={['tablet', 'mobile']}
-              deviceType={props.deviceType}
-              dotListClass="custom-dot-list-style"
-              itemClass="carousel-item-padding-40-px"
-            >
-              <div css={carouselDivStyle}>
-                <img src={props.product.image} alt="product" />
-                <h4>{props.product.productName}</h4>
-                <p>{props.product.price}</p>
-              </div>
-
-              <div css={carouselDivStyle}>
-                <img src={props.product.image} alt="product" />
-                <h4>{props.product.productName}</h4>
-                <p>{props.product.price}</p>
-              </div>
-
-              <div css={carouselDivStyle}>
-                <img src={props.product.image} alt="product" />
-                <h4>{props.product.productName}</h4>
-                <p>{props.product.price}</p>
-              </div>
-
-              <div css={carouselDivStyle}>
-                <img src={props.product.image} alt="product" />
-                <h4>{props.product.productName}</h4>
-                <p>{props.product.price}</p>
-              </div>
-            </Carousel>
-          </div>
-        </section>
-      </div>
-
       <Footer />
     </Layout>
   );
 }
 
 export async function getServerSideProps(context) {
-  // The name inside the square brackets of the filename
-  // is inside of the `context.query` object
+
   const productId = context.query.productId;
+
   console.log('productId', productId);
 
-  const { /* products */ getProductById } = await import('../../util/database');
+  const { getProductById } = await import('../../util/database');
 
   const product = await getProductById(productId);
-  /* products.find((p) => p.id === productId); */
 
   return {
     props: {
       product: product,
-      quantity: parseCookieValue(context.req.cookies.quantity) || [],
     },
   };
 }

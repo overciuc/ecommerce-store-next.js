@@ -29,19 +29,19 @@ const headerStyles = css`
 export default function Header() {
   return (
     <header css={headerStyles}>
-      <Link href="/" passHref>
+      <Link href="/">
         <a>Home</a>
       </Link>
-      <Link href="../products/allProductsPage">
+      <Link href="/products/allProductsPage">
         <a>Shop</a>
       </Link>
-      <Link href="../products/blog">
-        <a>Blog</a>
+      <Link href="/products/blog">
+        <a data-cy="header-blog-link">Blog</a>
       </Link>
       <Link href="/about">
         <a>About</a>
       </Link>
-      <Link href="../products/contact">
+      <Link href="/products/contact">
         <a>Contact</a>
       </Link>
     </header>

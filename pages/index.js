@@ -239,7 +239,7 @@ const newsletterBackground = css`
       width: 150px;
       height: 40px;
       border: none;
-      background-color: #cc3366;
+      background-color: #d11fc3;
       color: #fff;
       padding: 10px 20px;
       margin-left: 20px;
@@ -267,20 +267,19 @@ export default function Home(props) {
             <Link href="/products/clothingPage">
               <a>Clothing</a>
             </Link>
-            <Link href="/products/clothingPage">
+            <Link href="/products/accessories">
               <a>Accessories</a>
             </Link>
-            <Link href="/products/clothingPage">
+            <Link href="/products/books">
               <a>Books</a>
             </Link>
-            <Link href="/products/clothingPage">
+            <Link href="/products/toys">
               <a>Toys</a>
             </Link>
           </span>
           <span css={[navBarButtonStyle, marginLeft]}>
             <Link href="/products/basket">
               <a>
-                &#8364; 0.00 &nbsp;
                 <FontAwesomeIcon icon={faShoppingBasket} css={faIconStyle} />
               </a>
             </Link>
@@ -351,19 +350,10 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  // This will cause an error (you cannot
-  // import like this in a function):
-  //
-  // import { users } from '../../util/database';
-
-  const { /* products */ getProducts } = await import('../util/database');
+  const { getProducts } = await import('../util/database');
 
   const products = await getProducts();
 
-  // This console.log doesn't show up in the browser
-  //
-  // It will ONLY show up in Node.js (because this
-  // code is ONLY running on the server)
   console.log('products', products);
 
   return {

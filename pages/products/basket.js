@@ -6,7 +6,10 @@ import { useState } from 'react';
 import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
 import NavMenu from '../../components/NavMenu';
-import { getBasketCookieValue } from '../../util/cookies';
+import {
+  getBasketCookieValue,
+  updateProductQuantityInCookie,
+} from '../../util/cookies';
 
 config.autoAddCss = false;
 
@@ -42,13 +45,13 @@ const tableStyles = css`
   > tr > th {
     padding: 15px;
     text-align: center;
-    border: 1px solid rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 192, 203, 0.4);
   }
 
   > tr > td {
     text-align: left;
     padding: 15px;
-    border: 1px solid rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 192, 203, 0.4);
     align-items: center;
   }
   > tr > td > img {
@@ -79,6 +82,8 @@ const centerText = css`
   margin-left: auto;
   margin-right: auto;
   display: block;
+  padding-right: 20px;
+  padding-left: 20px;
 `;
 
 const counter = css`
@@ -105,14 +110,79 @@ const counter = css`
     color: #0052cc;
     user-select: none;
     border: none;
+    background-color: #ffc0cb;
+  }
+`;
+
+const checkoutButton = css`
+  margin: auto;
+  width: 1200px;
+  > a {
+    background-color: #00bbf9;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    font-size: 24px;
+    float: right;
+    text-align: center;
+    align-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+  }
+`;
+
+const removeFormBorders = css`
+  background-color: pink;
+  > td {
+    border-color: pink;
+    font-weight: bold;
   }
 `;
 
 export default function Basket(props) {
-  const [productQuantity, setProductQuantity] = useState(1);
-
+  // Product
   function getProductById(productId) {
-    return props.products.filter((product) => product.id === productId)[0];
+    return props.products.find((product) => product.id === parseInt(productId));
+  }
+
+  // Quantity Array
+  const [productQuantities, setProductQuantities] = useState(
+    Array.from(Object.keys(getBasketCookieValue()), (x) => ({
+      productId: x,
+      quantity: getBasketCookieValue()[x],
+    })),
+  );
+
+  const [totalPrice, setTotalPrice] = useState(
+    Object.entries(getBasketCookieValue())
+      .map(([id, quantity]) => getProductById(id).price * quantity)
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+  );
+
+  function incrementQuantity(productId) {
+    const newProductQuantities = productQuantities.map((product) => {
+      if (productId === product.productId) {
+        product.quantity += 1;
+        updateProductQuantityInCookie(productId, product.quantity);
+      }
+      return product;
+    });
+    setProductQuantities(newProductQuantities);
+    setTotalPrice((prevPrice) => prevPrice + getProductById(productId).price);
+  }
+
+  function decrementQuantity(productId) {
+    const newProductQuantities = productQuantities.map((product) => {
+      if (productId === product.productId) {
+        product.quantity -= 1;
+        updateProductQuantityInCookie(productId, product.quantity);
+      }
+      return product;
+    });
+    setProductQuantities(newProductQuantities);
+    setTotalPrice((prevPrice) => prevPrice - getProductById(productId).price);
   }
 
   return (
@@ -134,7 +204,8 @@ export default function Basket(props) {
               <th>Price</th>
               <th>Remove</th>
             </tr>
-            {getBasketCookieValue().map((productId) => (
+
+            {Object.keys(getBasketCookieValue()).map((productId) => (
               <tr key={productId}>
                 <td>
                   <img
@@ -148,15 +219,22 @@ export default function Basket(props) {
                   <span css={counter}>
                     <button
                       onClick={() => {
-                        setProductQuantity(productQuantity - 1);
+                        decrementQuantity(productId);
                       }}
                     >
                       -
                     </button>
-                    <input type="text" value={productQuantity} />
+                    <input
+                      value={
+                        productQuantities.find(
+                          (product) =>
+                            parseInt(productId) === parseInt(product.productId),
+                        ).quantity
+                      }
+                    />
                     <button
                       onClick={() => {
-                        setProductQuantity(productQuantity + 1);
+                        incrementQuantity(productId);
                       }}
                     >
                       +
@@ -165,7 +243,14 @@ export default function Basket(props) {
                 </td>
                 <td>
                   <span css={centerText}>
-                    {getProductById(productId).price}
+                    &#x20AC;
+                    {(
+                      getProductById(productId).price *
+                      productQuantities.find(
+                        (product) =>
+                          parseInt(productId) === parseInt(product.productId),
+                      ).quantity
+                    ).toFixed(2)}
                   </span>
                 </td>
                 <td>
@@ -173,7 +258,25 @@ export default function Basket(props) {
                 </td>
               </tr>
             ))}
+            <tr css={removeFormBorders}>
+              <td> </td>
+              <td> </td>
+              <td> </td>
+              <td> </td>
+              <td>Total cost:</td>
+              <td>
+                &#x20AC;{totalPrice.toFixed(2)}
+                {/* {Object.entries(getBasketCookieValue())
+                  .map(([id, quantity]) => getProductById(id).price * quantity)
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                  )}*/}
+              </td>
+            </tr>
           </table>
+        </div>
+        <div css={checkoutButton}>
+          <button>Checkout</button>
         </div>
       </section>
 
@@ -183,19 +286,11 @@ export default function Basket(props) {
 }
 
 export async function getServerSideProps() {
-  // This will cause an error (you cannot
-  // import like this in a function):
-  //
-  // import { users } from '../../util/database';
 
-  const { /* products */ getProducts } = await import('../../util/database');
+  const { getProducts } = await import('../../util/database');
 
   const products = await getProducts();
 
-  // This console.log doesn't show up in the browser
-  //
-  // It will ONLY show up in Node.js (because this
-  // code is ONLY running on the server)
   console.log('products', products);
 
   return {
