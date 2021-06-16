@@ -147,6 +147,10 @@ const productGrid = css`
     padding: 20px 15px;
     width: 285px;
     height: 300px;
+    transition: transform 0.3s ease;
+    :hover {
+      transform: translate(0, -10px);
+    }
   }
   > li > a {
     text-decoration: none;
@@ -252,7 +256,10 @@ const newsletterBackground = css`
 
 export default function Home(props) {
   return (
-    <Layout>
+    <Layout
+      shoppingCart={props.shoppingCart}
+      setShoppingCart={props.setShoppingCart}
+    >
       <Head>
         <title>Home</title>
       </Head>

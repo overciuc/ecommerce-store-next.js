@@ -11,6 +11,51 @@ import NavMenu from '../components/NavMenu';
 
 config.autoAddCss = false;
 
+const checkoutHeading = css`
+  width: 100%;
+  height: 200px;
+  background-color: #249af0;
+  margin: auto;
+  margin-top: -50px;
+  margin-bottom: 10px;
+  justify-content: center;
+  display: flex;
+
+  > span > h1 {
+    width: 1300px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
+    font-family: 'Gorditas', cursive;
+    padding-top: 50px;
+    text-align: left;
+    border-top: 1px solid #fff;
+  }
+`;
+const checkoutPage = css`
+  margin-top: 20px;
+  margin-bottom: 100px;
+  max-width: 1300px;
+  width: 100%;
+  margin: auto;
+
+  > div > a {
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    padding-bottom: 20px;
+    text-align: left;
+    margin-bottom: 50px;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+  > div > span {
+    color: red;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+`;
+
 const productGridSection = css`
   margin-top: 100px;
   margin-bottom: 100px;
@@ -118,6 +163,13 @@ const timeTable = css`
     margin-top: 20px;
     cursor: pointer;
     text-decoration: none;
+    :hover {
+      background-color: #6c0075;
+    }
+    :active {
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
   }
 `;
 
@@ -336,88 +388,109 @@ const pageContainer = css`
 
 export default function About(props) {
   return (
-    <Layout>
+    <Layout
+      shoppingCart={props.shoppingCart}
+      setShoppingCart={props.setShoppingCart}
+    >
       <Head>
         <title>About</title>
       </Head>
       <NavMenu />
+      <div css={checkoutHeading}>
+        <span>
+          <h1>About Us</h1>
+        </span>
+      </div>
 
-      <section css={productGridSection}>
-        <div css={productGrid}>
-          <div css={leftColumnHeader}>
-            <h2>E-COMMERCE SPRINKLE</h2>
-            <h1>
-              Who We Are, <br /> And What We Do
-            </h1>
-            <p>
-              Sprinkle is a small company who love anything related to children.
-              May it be toys, clothes, books, adventures, events and so on.
-              <br />
-              <br />
-              Anything is possible when you are a kid and our team here at
-              Sprinkle will do our best to provide you with interesting products
-              and information regarding events and activities for kids in the
-              city of Vienna, Austria and nearby surroundings.
-            </p>
-          </div>
-          <div>
-            <img src="/images/aboutUsPhoto.jpeg" alt="about" css={imageStyle} />
-          </div>
-          <div css={timeTable}>
-            <div>
-              <h2>Working Hours</h2>
+      <section css={checkoutPage}>
+        <div>
+          <Link href="/">
+            <a>Home &nbsp; &#62; </a>
+          </Link>
+          <span>&nbsp; About</span>
+        </div>
+        <div css={productGridSection}>
+          <div css={productGrid}>
+            <div css={leftColumnHeader}>
+              <h2>E-COMMERCE SPRINKLE</h2>
+              <h1>
+                Who We Are, <br /> And What We Do
+              </h1>
+              <p>
+                Sprinkle is a small company who love anything related to
+                children. May it be toys, clothes, books, adventures, events and
+                so on.
+                <br />
+                <br />
+                Anything is possible when you are a kid and our team here at
+                Sprinkle will do our best to provide you with interesting
+                products and information regarding events and activities for
+                kids in the city of Vienna, Austria and nearby surroundings.
+              </p>
             </div>
             <div>
-              Monday&nbsp;&nbsp;
-              <span>
-                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-                . . . . . . . . . .
-              </span>
-              &nbsp;&nbsp;9AM - 6PM
+              <img
+                src="/images/aboutUsPhoto.jpeg"
+                alt="about"
+                css={imageStyle}
+              />
             </div>
-            <div>
-              Tuesday&nbsp;&nbsp;
-              <span>
-                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-                . . . . . . . . . .
-              </span>
-              &nbsp;&nbsp;9AM - 6PM
+            <div css={timeTable}>
+              <div>
+                <h2>Working Hours</h2>
+              </div>
+              <div>
+                Monday&nbsp;&nbsp;
+                <span>
+                  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  . . . . . . . . . . .
+                </span>
+                &nbsp;&nbsp;9AM - 6PM
+              </div>
+              <div>
+                Tuesday&nbsp;&nbsp;
+                <span>
+                  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  . . . . . . . . . . .
+                </span>
+                &nbsp;&nbsp;9AM - 6PM
+              </div>
+              <div>
+                Wednesday&nbsp;&nbsp;
+                <span>
+                  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  . . .
+                </span>
+                &nbsp;&nbsp;9AM - 6PM
+              </div>
+              <div>
+                Thursday&nbsp;&nbsp;
+                <span>
+                  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  . . . . . . . . .
+                </span>
+                &nbsp;&nbsp;9AM - 6PM
+              </div>
+              <div>
+                Friday&nbsp;&nbsp;
+                <span>
+                  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  . . . . . . . . . . . . . . . . .
+                </span>
+                &nbsp;&nbsp;9AM - 6PM
+              </div>
+              <div>
+                Saturday&nbsp;&nbsp;
+                <span>
+                  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  . . . . . . . . . .
+                </span>
+                &nbsp;&nbsp;9AM - 4PM
+              </div>
+              <Link href="/products/contact">
+                <a>Get in Touch</a>
+              </Link>
             </div>
-            <div>
-              Wednesday&nbsp;&nbsp;
-              <span>
-                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-                . .
-              </span>
-              &nbsp;&nbsp;9AM - 6PM
-            </div>
-            <div>
-              Thursday&nbsp;&nbsp;
-              <span>
-                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-                . . . . . . . .
-              </span>
-              &nbsp;&nbsp;9AM - 6PM
-            </div>
-            <div>
-              Friday&nbsp;&nbsp;
-              <span>
-                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-                . . . . . . . . . . . . . . . .
-              </span>
-              &nbsp;&nbsp;9AM - 6PM
-            </div>
-            <div>
-              Saturday&nbsp;&nbsp;
-              <span>
-                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-                . . . . . . . . .
-              </span>
-              &nbsp;&nbsp;9AM - 4PM
-            </div>
-            <Link href="/products/contact">
-              <a>Get in Touch</a>
-            </Link>
           </div>
         </div>
       </section>
@@ -487,9 +560,9 @@ export default function About(props) {
               </p>
               <hr css={line} />
               <p css={teamMemebersText}>
-                The Ispiration for Sprinkle Online SHop for Kids. <br />
+                The Ispiration for Sprinkle Online Shop for Kids. <br />
                 Spends her free time outdoors with family and friends. Always
-                being a little rascal and lookinf for ways to misbehave.
+                being a fun little rascal and looking for ways to misbehave.
               </p>
             </div>
           </div>

@@ -24,7 +24,10 @@ const listStyles = css`
 export default function Products(props: Props) {
   console.log('props', props);
   return (
-    <Layout>
+    <Layout
+    // shoppingCart={props.shoppingCart}
+    // setShoppingCart={props.setShoppingCart}
+    >
       <Head>
         <title>Products</title>
       </Head>

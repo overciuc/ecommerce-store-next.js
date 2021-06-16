@@ -2,16 +2,63 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { css } from '@emotion/react';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState } from 'react';
 import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
 import NavMenu from '../../components/NavMenu';
 import {
   getBasketCookieValue,
+  removeProductFromShoppingCart,
   updateProductQuantityInCookie,
 } from '../../util/cookies';
 
 config.autoAddCss = false;
+
+const checkoutHeading = css`
+  width: 100%;
+  height: 200px;
+  background-color: #249af0;
+  margin: auto;
+  margin-top: -50px;
+  margin-bottom: 10px;
+  justify-content: center;
+  display: flex;
+
+  > span > h1 {
+    width: 1300px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
+    font-family: 'Gorditas', cursive;
+    padding-top: 50px;
+    text-align: left;
+    border-top: 1px solid #fff;
+  }
+`;
+const checkoutPage = css`
+  margin-top: 20px;
+  margin-bottom: 100px;
+  max-width: 1300px;
+  width: 100%;
+  margin: auto;
+
+  > div > a {
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    padding-bottom: 20px;
+    text-align: left;
+    margin-bottom: 50px;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+  > div > span {
+    color: red;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+`;
 
 const basketSection = css`
   margin-top: 50px;
@@ -130,6 +177,13 @@ const checkoutButton = css`
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
+    :hover {
+      background-color: #6c0075;
+    }
+    :active {
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
   }
 `;
 
@@ -142,6 +196,9 @@ const removeFormBorders = css`
 `;
 
 export default function Basket(props) {
+  const [cookieBasketValue, setCookieBasketValue] =
+    useState(getBasketCookieValue);
+
   // Product
   function getProductById(productId) {
     return props.products.find((product) => product.id === parseInt(productId));
@@ -186,107 +243,130 @@ export default function Basket(props) {
   }
 
   return (
-    <Layout>
+    <Layout
+      shoppingCart={props.shoppingCart}
+      setShoppingCart={props.setShoppingCart}
+    >
       <Head>
         <title>Cart</title>
       </Head>
-      <NavMenu />
+      <NavMenu setShoppingCart={props.setShoppingCart} />
+      <div css={checkoutHeading}>
+        <span>
+          <h1 data-cy="basket-page-h1">Shopping Cart</h1>
+        </span>
+      </div>
 
-      <section css={basketSection}>
-        <h1>Your Products</h1>
-        <div css={tableSection}>
-          <table css={tableStyles}>
-            <tr>
-              <th />
-              <th>Product Name</th>
-              <th>Description</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th>Remove</th>
-            </tr>
+      <section css={checkoutPage}>
+        <div>
+          <Link href="/">
+            <a>Home &nbsp; &#62; </a>
+          </Link>
+          <Link href="/products/allProductsPage">
+            <a>&nbsp; Shop &nbsp; &#62; </a>
+          </Link>
+          <span>&nbsp; Shopping Cart</span>
+        </div>
+        <div css={basketSection}>
+          <div css={tableSection}>
+            <table css={tableStyles}>
+              <tr>
+                <th />
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Remove</th>
+              </tr>
 
-            {Object.keys(getBasketCookieValue()).map((productId) => (
-              <tr key={productId}>
-                <td>
-                  <img
-                    src={getProductById(productId).productImage}
-                    alt="product"
-                  />
-                </td>
-                <td>{getProductById(productId).productName}</td>
-                <td>{getProductById(productId).productShortDescription}</td>
-                <td>
-                  <span css={counter}>
-                    <button
-                      onClick={() => {
-                        decrementQuantity(productId);
-                      }}
-                    >
-                      -
-                    </button>
-                    <input
-                      value={
+              {Object.keys(cookieBasketValue).map((productId) => (
+                <tr key={productId}>
+                  <td>
+                    <img
+                      src={getProductById(productId).productImage}
+                      alt="product"
+                    />
+                  </td>
+                  <td>{getProductById(productId).productName}</td>
+                  <td>{getProductById(productId).productShortDescription}</td>
+                  <td>
+                    <span css={counter}>
+                      <button
+                        onClick={() => {
+                          decrementQuantity(productId);
+                        }}
+                      >
+                        -
+                      </button>
+                      <input
+                        data-cy="basket-page-input-field-value-3"
+                        value={
+                          productQuantities.find(
+                            (product) =>
+                              parseInt(productId) ===
+                              parseInt(product.productId),
+                          ).quantity
+                        }
+                      />
+                      <button
+                        data-cy="basket-page-increase-quantity-by-1"
+                        onClick={() => {
+                          incrementQuantity(productId);
+                        }}
+                      >
+                        +
+                      </button>
+                    </span>
+                  </td>
+                  <td>
+                    <span css={centerText}>
+                      &#x20AC;
+                      {(
+                        getProductById(productId).price *
                         productQuantities.find(
                           (product) =>
                             parseInt(productId) === parseInt(product.productId),
                         ).quantity
-                      }
-                    />
+                      ).toFixed(2)}
+                    </span>
+                  </td>
+                  <td>
                     <button
+                      data-cy="basket-page-button-delete"
+                      css={deleteButtonStyle}
                       onClick={() => {
-                        incrementQuantity(productId);
+                        removeProductFromShoppingCart(productId);
+                        setCookieBasketValue(getBasketCookieValue());
                       }}
                     >
-                      +
+                      x
                     </button>
-                  </span>
-                </td>
-                <td>
-                  <span css={centerText}>
-                    &#x20AC;
-                    {(
-                      getProductById(productId).price *
-                      productQuantities.find(
-                        (product) =>
-                          parseInt(productId) === parseInt(product.productId),
-                      ).quantity
-                    ).toFixed(2)}
-                  </span>
-                </td>
-                <td>
-                  <span css={deleteButtonStyle}>x</span>
-                </td>
+                  </td>
+                </tr>
+              ))}
+              <tr css={removeFormBorders}>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td>Total cost:</td>
+                <td>&#x20AC;{totalPrice.toFixed(2)}</td>
               </tr>
-            ))}
-            <tr css={removeFormBorders}>
-              <td> </td>
-              <td> </td>
-              <td> </td>
-              <td> </td>
-              <td>Total cost:</td>
-              <td>
-                &#x20AC;{totalPrice.toFixed(2)}
-                {/* {Object.entries(getBasketCookieValue())
-                  .map(([id, quantity]) => getProductById(id).price * quantity)
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                  )}*/}
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div css={checkoutButton}>
-          <button>Checkout</button>
+            </table>
+          </div>
+          <div css={checkoutButton}>
+            <Link href="/products/checkout">
+              <a data-cy="basket-page-button-checkout">Checkout</a>
+            </Link>
+          </div>
         </div>
       </section>
-
       <Footer />
     </Layout>
   );
 }
 
 export async function getServerSideProps() {
-
   const { getProducts } = await import('../../util/database');
 
   const products = await getProducts();

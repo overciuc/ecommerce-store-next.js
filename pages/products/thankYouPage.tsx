@@ -58,14 +58,13 @@ const contactUsPage = css`
 `;
 
 const contactPageGrid = css`
-  max-width: 1500px;
+  max-width: 1300px;
   justify-content: space-between;
   margin: auto;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 40% 60%;
   align-items: center;
-  grid-gap: 1rem;
-  text-align: center;
+  grid-gap: 50px;
   list-style-type: none;
   margin-bottom: 50px;
   margin-top: 50px;
@@ -83,10 +82,6 @@ const contactPageGrid = css`
     :hover {
       background-color: #6c0075;
     }
-    :active {
-      box-shadow: 0 5px #666;
-      transform: translateY(4px);
-    }
   }
 
   > div > p {
@@ -95,71 +90,31 @@ const contactPageGrid = css`
     line-height: 1.5;
     color: gray;
   }
+
+  > div > span {
+    margin-left: 0;
+    margin-right: 40px;
+    text-align: left;
+  }
+  > div > span > a {
+    color: #ff0000;
+    font-family: 'Baloo Tammudu 2', cursive;
+    text-align: left;
+  }
 `;
 
 const contactImage = css`
-  max-width: 600px;
-  max-height: 650px;
-  justify-content: center;
-  padding: 20px;
-  padding-right: 20px;
-  margin-right: 40px;
-  margin: auto;
-`;
-
-const formContainer = css`
-  display: block;
   max-width: 650px;
-  width: 100%;
-  justify-content: center;
+  max-height: 500px;
+  justify-content: right;
+  padding: 20px;
+  padding-right: 30px;
+  padding-left: 30px;
   margin: auto;
-  text-align: left;
-
-  > div {
-    width: 100%;
-    margin: auto;
-    margin-top: 20px;
-
-    display: block;
-  }
-
-  > div > input {
-    border-radius: 25px;
-    height: 50px;
-    width: 500px;
-    border: 1px solid #00bbf9;
-    margin-bottom: 10px;
-    display: block;
-    margin-top: 25px;
-    outline: none;
-    font-family: inherit;
-    padding-left: 20px;
-    ::placeholder {
-      color: gray;
-      opacity: 0.5;
-      font-size: 16px;
-    }
-  }
-
-  > div > textarea {
-    width: 500px;
-    border-radius: 25px;
-    border: 1px solid #00bbf9;
-    align-items: center;
-    height: 120px;
-    display: block;
-    margin: 25px 0;
-    outline: none;
-    font-family: inherit;
-    padding-left: 20px;
-    padding-top: 10px;
-    ::placeholder {
-      color: gray;
-      opacity: 0.5;
-      font-size: 16px;
-    }
-  }
+  float: right;
+  box-shadow: 1px 1px 15px gray; ;
 `;
+
 const redBackgroundHeading = css`
   text-align: center;
   background-color: red;
@@ -169,7 +124,7 @@ const redBackgroundHeading = css`
   font-size: 20px;
   border-radius: 10px;
   padding: 10px 10px;
-  width: 40%;
+  width: 20%;
   margin-left: 0;
   margin-right: auto;
   margin-top: 10px;
@@ -184,6 +139,27 @@ const titleStyles = css`
   margin-bottom: 10px;
   font-family: 'Gorditas', cursive;
   margin-top: 10px;
+  text-align: left;
+`;
+
+const checkoutButton = css`
+  margin-top: 40px;
+  > a {
+    background-color: #00bbf9;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    font-size: 24px;
+    text-align: center;
+    align-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    :hover {
+      background-color: #6c0075;
+    }
+  }
 `;
 
 export default function ContactUs(props: any) {
@@ -193,12 +169,12 @@ export default function ContactUs(props: any) {
       setShoppingCart={props.setShoppingCart}
     >
       <Head>
-        <title>Contact</title>
+        <title>Success!</title>
       </Head>
       <NavMenu />
       <div css={contactUsHeading}>
         <span>
-          <h1>Contact Us</h1>
+          <h1 data-cy="thank-you-page-h1">Thank You</h1>
         </span>
       </div>
       <section css={contactUsPage}>
@@ -206,45 +182,45 @@ export default function ContactUs(props: any) {
           <Link href="/">
             <a>Home &nbsp;&nbsp; &#62; </a>
           </Link>
-          <span>&nbsp;&nbsp; Contact</span>
+          <Link href="/products/allProductsPage">
+            <a>&nbsp;&nbsp;Shop &nbsp;&nbsp; &#62; </a>
+          </Link>
+          <span>&nbsp;&nbsp; Thank you</span>
         </div>
         <div css={contactPageGrid}>
           <div>
             <img
-              src="/images/cuteCat.jpg"
+              src="/images/thankYouImage.jpg"
               css={contactImage}
               alt="A cat with balloons"
             />
           </div>
           <div>
-            <h2 css={redBackgroundHeading}>Have a Question?</h2>
-            <h1 css={titleStyles}>Send Us a Message</h1>
+            <h2 css={redBackgroundHeading}>Success!</h2>
+            <h1 css={titleStyles}>
+              Thank you for your <br />
+              purchase
+            </h1>
             <p>
-              Dont be shy, Just tell us about yourself and we’ll figure <br />
-              out the best option for you or your company
+              Your purchase has been successful. <br />
+              Please see your receipt and purchase <br />
+              history in the links below.
             </p>
-
-            <form css={formContainer}>
-              <div>
-                <input
-                  id="firstName"
-                  placeholder="First Name"
-                  type="text"
-                  name="firstName"
-                />
-
-                <input placeholder="Last Name" id="lastName" name="lastName" />
-              </div>
-
-              <div>
-                <textarea
-                  placeholder="Your message here"
-                  id="messageArea"
-                  name="messageArea"
-                />
-              </div>
-            </form>
-            <button>Send Message</button>
+            <span>
+              <Link href="/products/allProductsPage">
+                <a>Purchase Receipt</a>
+              </Link>
+            </span>
+            <span>
+              <Link href="/products/allProductsPage">
+                <a>Purchase History</a>
+              </Link>
+            </span>
+            <div css={checkoutButton}>
+              <Link href="/products/allProductsPage">
+                <a>Back to Shop</a>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

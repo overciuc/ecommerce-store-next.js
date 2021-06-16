@@ -2,14 +2,57 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { css } from '@emotion/react';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import Head from 'next/head';
+import Link from 'next/link';
 import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
 import NavMenu from '../../components/NavMenu';
-import PageHeading from '../../components/PageHeading';
 
 config.autoAddCss = false;
 
-config.autoAddCss = false;
+const checkoutHeading = css`
+  width: 100%;
+  height: 200px;
+  background-color: #249af0;
+  margin: auto;
+  margin-top: -50px;
+  margin-bottom: 10px;
+  justify-content: center;
+  display: flex;
+
+  > span > h1 {
+    width: 1300px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
+    font-family: 'Gorditas', cursive;
+    padding-top: 50px;
+    text-align: left;
+    border-top: 1px solid #fff;
+  }
+`;
+const checkoutPage = css`
+  margin-top: 20px;
+  margin-bottom: 100px;
+  max-width: 1300px;
+  width: 100%;
+  margin: auto;
+
+  > div > a {
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    padding-bottom: 20px;
+    text-align: left;
+    margin-bottom: 50px;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+  > div > span {
+    color: red;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+`;
 
 const blogPage = css`
   margin-top: 100px;
@@ -47,80 +90,44 @@ const productGridSection = css`
     font-family: 'Gorditas', cursive;
   }
 `;
-const productGrid = css`
-  max-width: 1300px;
-  justify-content: center;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-  grid-template-rows: repeat(2, 300px);
-  align-items: center;
-  grid-gap: 1rem;
-  padding: 20px 40px;
-  text-align: center;
-  list-style-type: none;
 
-  > li {
-    box-shadow: 1px 0px 5px #a8a8a8;
-    border: none;
-    padding-top: 20px 15px;
-    width: 285px;
-    height: 300px;
-  }
-  > li > a {
-    text-decoration: none;
-  }
-
-  > li > a > span > img {
-    width: 100px;
-    height: 100px;
-  }
-
-  > li > a > span {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    color: gray;
-  }
-  > li > a > span > h2 {
-    font-size: 20px;
-    color: gray;
-    font-weight: bold;
-    padding-top: -30px;
-    font-family: 'Gorditas', cursive;
-  }
-  > li > span {
-    margin-top: 20px;
-  }
-  > li > span > a {
-    color: red;
-    font-size: 16px;
-    text-decoration: none;
-  }
-`;
-
-export default function Blog() {
+export default function Blog(props) {
   return (
-    <Layout>
+    <Layout
+      shoppingCart={props.shoppingCart}
+      setShoppingCart={props.setShoppingCart}
+    >
       <Head>
         <title>Blog</title>
       </Head>
       <NavMenu />
-      <PageHeading />
+      <div css={checkoutHeading}>
+        <span>
+          <h1>Our Blog</h1>
+        </span>
+      </div>
 
-      <section css={blogPage}>
-        <h1>Welcome to our Shop</h1>
-        <div css={blogPost}>
-          <p>
-            Contrary to popular belief, Lorem Ipsum is not simply random text.
-          </p>
+      <section css={checkoutPage}>
+        <div>
+          <Link href="/">
+            <a>Home &nbsp; &#62; </a>
+          </Link>
+          <span>&nbsp; Blog</span>
+        </div>
+        <div css={blogPage}>
+          <h1>Welcome to our Shop</h1>
+          <div css={blogPost}>
+            <p>
+              Contrary to popular belief, Lorem Ipsum is not simply random text.
+            </p>
+          </div>
         </div>
       </section>
 
       <section css={productGridSection}>
         <h1>Welcome to our Shop</h1>
         <div>
-          <img src="/images/aboutUsImage.jpeg" alt="Blog"></img>
+          <img src="/images/aboutUsImage.jpeg" alt="Blog" />
         </div>
       </section>
 

@@ -28,8 +28,8 @@ const navigationMenu = css`
   justify-content: center;
   margin-top: 20px;
   padding: 55px 15px;
-  margin-left: 300px;
-  margin-right: 100px;
+  margin-left: 200px;
+  margin-right: 20px;
 `;
 
 const navBarButtonStyle = css`
@@ -56,7 +56,7 @@ const navBarButtonStyle = css`
 `;
 
 const logoStyles = css`
-  margin-right: 150px;
+  margin-right: 200px;
   color: #fff;
   font-family: 'Gorditas', cursive;
   font-size: 30px;
@@ -71,11 +71,7 @@ const marginLeft = css`
   margin-left: 200px;
 `;
 
-const circle = (quantity) => {
-  return <span className="circle">{quantity}</span>;
-};
-
-export default function NavMenu(addToBasket, quantity) {
+export default function NavMenu() {
   return (
     <div css={containerStyles}>
       <div css={navigationMenu}>
@@ -94,15 +90,14 @@ export default function NavMenu(addToBasket, quantity) {
             <a>Books</a>
           </Link>
           <Link href="/products/toys">
-            <a>Toys</a>
+            <a data-cy="nav-menu-toys">Toys</a>
           </Link>
         </span>
 
         <span css={[navBarButtonStyle, marginLeft]}>
           <Link href="/products/basket">
-            <a>
+            <a data-cy="nav-menu-shoppingCart">
               <FontAwesomeIcon icon={faShoppingBasket} css={faIconStyle} />
-              {addToBasket === true ? circle(quantity) : null}
             </a>
           </Link>
           <Link href="#1">

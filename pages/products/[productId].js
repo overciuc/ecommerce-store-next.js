@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState } from 'react';
 import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
@@ -9,6 +10,51 @@ import {
   toggleAddedProductByProductId,
 } from '../../util/cookies';
 
+const checkoutHeading = css`
+  width: 100%;
+  height: 200px;
+  background-color: #249af0;
+  margin: auto;
+  margin-top: -50px;
+  margin-bottom: 10px;
+  justify-content: center;
+  display: flex;
+
+  > span > h1 {
+    width: 1300px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
+    font-family: 'Gorditas', cursive;
+    padding-top: 50px;
+    text-align: left;
+    border-top: 1px solid #fff;
+  }
+`;
+const checkoutPage = css`
+  margin-top: 20px;
+  margin-bottom: 100px;
+  max-width: 1300px;
+  width: 100%;
+  margin: auto;
+
+  > div > a {
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    padding-bottom: 20px;
+    text-align: left;
+    margin-bottom: 50px;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+  > div > span {
+    color: red;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+`;
+
 const productGrid = css`
   max-width: 1300px;
   justify-content: space-between;
@@ -16,7 +62,7 @@ const productGrid = css`
   display: grid;
   grid-template-columns: 50% 50%;
   align-items: center;
-  grid-gap: 1rem;
+  grid-gap: 50px;
   padding: 20px 40px;
   text-align: center;
   list-style-type: none;
@@ -31,9 +77,8 @@ const productGrid = css`
 
   > span > img {
     padding: 20px;
-
-    max-width: 600px;
-    max-height: 600px;
+    max-width: 500px;
+    max-height: 500px;
     padding-right: 50px;
     text-align: center;
   }
@@ -86,8 +131,13 @@ const productGrid = css`
     border: none;
     font-size: 24px;
     cursor: pointer;
+    z-index: 10;
     :hover {
       background-color: #6c0075;
+    }
+    :active {
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
     }
   }
   > div {
@@ -160,7 +210,10 @@ export default function SingleProduct(props) {
 
   const [totalPrice, setTotalPrice] = useState(generalPrice);
 
-  const [addToBasket, setAddToBasket] = useState(getBasketCookieValue());
+  const [shoppingBasket, setShoppingBasket] = useState(getBasketCookieValue());
+
+  const [addToCart, setAddToCart] = useState(false);
+  console.log(`Add to cart button click ? ${addToCart}`);
 
   function incrementQuantity() {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -172,61 +225,90 @@ export default function SingleProduct(props) {
   }
 
   return (
-    <Layout>
+    <Layout
+      shoppingCart={props.shoppingCart}
+      setShoppingCart={props.setShoppingCart}
+    >
       <Head>
         <title>{props.product.productName}</title>
       </Head>
       <NavMenu />
-
-      <section css={productGrid}>
+      <div css={checkoutHeading}>
         <span>
-          <img src={props.product.productImage} alt="product" />
+          <h1>Product</h1>
         </span>
-        <span>
-          <h1>{props.product.productName}</h1>
-          <p>
-            <span css={euroSignSize}>&#x20AC; </span>
-            {(props.product.price * quantity).toFixed(2)}
+      </div>
 
-            <span css={counter}>
-              <button
-                onClick={() => {
-                  decrementQuantity();
-                }}
-              >
-                -
-              </button>
-              <input value={quantity} min="1" defaultValue={1} />
+      <section css={checkoutPage}>
+        <div>
+          <Link href="/">
+            <a>Home &nbsp; &#62; </a>
+          </Link>
+          <Link href="/products/allProductsPage">
+            <a>&nbsp; Shop &nbsp; &#62; </a>
+          </Link>
+          <span>&nbsp; Product</span>
+        </div>
 
-              <button
-                onClick={() => {
-                  incrementQuantity();
-                }}
-              >
-                +
-              </button>
-            </span>
-          </p>
-          <p>
-            <span>
-              Including 20% VAT, <a href="#1">plus shipping costs</a>
-            </span>
-          </p>
-          <p>{props.product.productShortDescription}</p>
+        <div css={productGrid}>
+          <span>
+            <img src={props.product.productImage} alt="product" />
+          </span>
+          <span>
+            <h1 data-cy="product-page-h1">{props.product.productName}</h1>
+            <p>
+              <span css={euroSignSize}>&#x20AC; </span>
+              {(props.product.price * quantity).toFixed(2)}
 
-          <button
-            onClick={() => {
-              getBasketCookieValue();
-              setAddToBasket(
-                toggleAddedProductByProductId(props.product.id, quantity),
-              );
-            }}
-          >
-            {props.product.id in addToBasket
-              ? 'Remove from Basket'
-              : 'Add to Basket'}
-          </button>
-        </span>
+              <span css={counter}>
+                <button
+                  onClick={() => {
+                    decrementQuantity();
+                  }}
+                >
+                  -
+                </button>
+                <input
+                  data-cy="product-page-input-field-value-2"
+                  value={quantity}
+                  min="1"
+                  defaultValue={1}
+                />
+
+                <button
+                  data-cy="product-page-button-+"
+                  onClick={() => {
+                    incrementQuantity();
+                  }}
+                >
+                  +
+                </button>
+              </span>
+            </p>
+            <p>
+              <span>
+                Including 20% VAT, <a href="#1">plus shipping costs</a>
+              </span>
+            </p>
+            <p>{props.product.productShortDescription}</p>
+
+            <button
+              data-cy="product-page-addToCart-button"
+              onClick={() => {
+                getBasketCookieValue();
+                setShoppingBasket(
+                  toggleAddedProductByProductId(props.product.id, quantity),
+                );
+              }}
+            >
+              {/*
+              {props.product.id in shoppingBasket
+                ? 'Remove from Basket'
+                : 'Add to Basket'}*/}
+              Add to Basket
+            </button>
+          </span>
+        </div>
       </section>
       <section css={descriptionContainer}>
         <div>
@@ -241,7 +323,6 @@ export default function SingleProduct(props) {
 }
 
 export async function getServerSideProps(context) {
-
   const productId = context.query.productId;
 
   console.log('productId', productId);

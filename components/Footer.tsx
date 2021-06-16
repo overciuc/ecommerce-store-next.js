@@ -98,8 +98,9 @@ const footerDetails = css`
     border: none;
     margin-top: 10px;
     margin-bottom: 10px;
+    background-color: #186fad;
     ::placeholder {
-      color: gray;
+      color: #fff;
       opacity: 0.7;
       padding-left: 15px;
     }
@@ -116,6 +117,9 @@ const footerDetails = css`
     font-size: 15px;
     font-weight: bold;
     margin-top: 10px;
+    :hover {
+      background-color: #69105a;
+    }
   }
 `;
 

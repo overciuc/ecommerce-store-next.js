@@ -10,6 +10,51 @@ import NavMenu from '../../components/NavMenu';
 
 config.autoAddCss = false;
 
+const checkoutHeading = css`
+  width: 100%;
+  height: 200px;
+  background-color: #249af0;
+  margin: auto;
+  margin-top: -50px;
+  margin-bottom: 10px;
+  justify-content: center;
+  display: flex;
+
+  > span > h1 {
+    width: 1300px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
+    font-family: 'Gorditas', cursive;
+    padding-top: 50px;
+    text-align: left;
+    border-top: 1px solid #fff;
+  }
+`;
+const checkoutPage = css`
+  margin-top: 20px;
+  margin-bottom: 100px;
+  max-width: 1300px;
+  width: 100%;
+  margin: auto;
+
+  > div > a {
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    padding-bottom: 20px;
+    text-align: left;
+    margin-bottom: 50px;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+  > div > span {
+    color: red;
+    font-family: 'Baloo Tammudu 2', cursive;
+  }
+`;
+
 const productGridSection = css`
   margin-top: 100px;
   margin-bottom: 100px;
@@ -41,6 +86,10 @@ const productGrid = css`
     box-shadow: 1px 0px 5px #a8a8a8;
     border: none;
     padding: 20px 15px;
+    transition: transform 0.3s ease;
+    :hover {
+      transform: translate(0, -10px);
+    }
   }
   > li > a {
     text-decoration: none;
@@ -76,41 +125,59 @@ const productGrid = css`
 
 export default function Accessories(props) {
   return (
-    <Layout>
+    <Layout
+      shoppingCart={props.shoppingCart}
+      setShoppingCart={props.setShoppingCart}
+    >
       <Head>
         <title>Accessories</title>
       </Head>
       <NavMenu />
+      <div css={checkoutHeading}>
+        <span>
+          <h1>Accessories</h1>
+        </span>
+      </div>
 
-      <section css={productGridSection}>
-        <h1>Accessories</h1>
-        <ul css={productGrid}>
-          {props.products
-            .filter((product) => product.category === 'Accessories')
-            .map((sortedProduct) => (
-              <li key={`product-${sortedProduct.id}`}>
-                <Link href={`/products/${sortedProduct.id}`}>
-                  <a>
-                    <span>
-                      <Image
-                        src={sortedProduct.productImage}
-                        alt="Product"
-                        width={100}
-                        height={100}
-                      />
-                    </span>
-                    <span>
-                      <h2>{sortedProduct.productName}</h2>
-                    </span>
-                    <span>{sortedProduct.price}</span>
-                  </a>
-                </Link>
-                <span>
-                  <a href="#1">Add to basket</a>
-                </span>
-              </li>
-            ))}
-        </ul>
+      <section css={checkoutPage}>
+        <div>
+          <Link href="/">
+            <a>Home &nbsp; &#62; </a>
+          </Link>
+          <Link href="/">
+            <a>&nbsp;&nbsp;Shop &nbsp; &#62; </a>
+          </Link>
+          <span>&nbsp; Accessories</span>
+        </div>
+        <div css={productGridSection}>
+          <ul css={productGrid}>
+            {props.products
+              .filter((product) => product.category === 'Accessories')
+              .map((sortedProduct) => (
+                <li key={`product-${sortedProduct.id}`}>
+                  <Link href={`/products/${sortedProduct.id}`}>
+                    <a>
+                      <span>
+                        <Image
+                          src={sortedProduct.productImage}
+                          alt="Product"
+                          width={100}
+                          height={100}
+                        />
+                      </span>
+                      <span>
+                        <h2>{sortedProduct.productName}</h2>
+                      </span>
+                      <span>{sortedProduct.price}</span>
+                    </a>
+                  </Link>
+                  <span>
+                    <a href="#1">Add to basket</a>
+                  </span>
+                </li>
+              ))}
+          </ul>
+        </div>
       </section>
 
       <Footer />
