@@ -1,4 +1,5 @@
 import '@fortawesome/fontawesome-svg-core/styles.css'; // import Font Awesome CSS
+import '../css/main.css';
 import { css, Global } from '@emotion/react';
 import { config } from '@fortawesome/fontawesome-svg-core';
 // import { props } from 'cypress/types/bluebird';
@@ -19,13 +20,6 @@ export default function App({ Component, pageProps }) {
     <>
       <Global
         styles={css`
-          @font-face {
-            font-weight: 400;
-            font-family: 'Gorditas';
-            src: url('https://fonts.googleapis.com/css2?family=Gorditas&display=swap')
-              format('stylesheet');
-            font-style: cursive;
-          }
           /* More natural sizing model */
           *,
           *::before,
@@ -43,14 +37,14 @@ export default function App({ Component, pageProps }) {
 
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <link
+        {/* <link
           href="https://fonts.googleapis.com/css2?family=Gorditas&display=swap"
           rel="stylesheet"
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap"
           rel="stylesheet"
-        />
+        /> */}
         <link rel="preconnect" href="https://fonts.gstatic.com" />
       </Head>
 

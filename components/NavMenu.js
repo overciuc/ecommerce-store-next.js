@@ -103,7 +103,6 @@ export default function NavMenu() {
             <a data-cy="nav-menu-shoppingCart">
               <FontAwesomeIcon icon={faShoppingBasket} css={faIconStyle} />
             </a>
-            {setShoppingCart().quantity}
           </Link>
           <Link href="#1">
             <a>
