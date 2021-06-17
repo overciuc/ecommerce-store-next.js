@@ -74,6 +74,7 @@ const marginLeft = css`
 `;
 
 export default function NavMenu() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shoppingCart, setShoppingCart] = useState(getBasketCookieValue);
 
   return (
