@@ -1,7 +1,7 @@
 import camelcaseKeys from 'camelcase-keys';
 import dotenvSafe from 'dotenv-safe';
 import postgres from 'postgres';
-import setPostgresDefaultsOnHeroku from './setPostgresDefaultsOnHeroku';
+import setPostgresDefaultsOnHeroku from './setPostgresDefaultsOnHeroku.js';
 
 setPostgresDefaultsOnHeroku();
 dotenvSafe.config();
