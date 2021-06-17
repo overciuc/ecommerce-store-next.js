@@ -1,14 +1,13 @@
 import camelcaseKeys from 'camelcase-keys';
 import dotenvSafe from 'dotenv-safe';
 import postgres from 'postgres';
+import setPostgresDefaultsOnHeroku from './setPostgresDefaultsOnHeroku.js';
 
-// import setPostgresDefaultsOnHeroku from './setPostgresDefaultsOnHeroku.js';
-
-// setPostgresDefaultsOnHeroku();
+setPostgresDefaultsOnHeroku();
 dotenvSafe.config();
 
-const sql = postgres();
-/*
+// const sql = postgres();
+
 function connectOneTimeToDatabase() {
   let sql;
 
@@ -28,7 +27,7 @@ function connectOneTimeToDatabase() {
 }
 
 const sql = connectOneTimeToDatabase();
-*/
+
 export async function getProducts() {
   const products = await sql`SELECT * FROM products`;
   return products.map((product) => camelcaseKeys(product));
