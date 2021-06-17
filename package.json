@@ -2,6 +2,9 @@
   "name": "ecommerce-store-next.js",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -17,8 +20,9 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "bootstrap-select-country": "^4.2.0",
+    "@heroku/buildpack-registry": "^1.0.1",
     "camelcase-keys": "^6.2.2",
+    "cookie": "^0.4.1",
     "cypress": "^7.5.0",
     "dotenv-cli": "^4.0.0",
     "dotenv-safe": "^8.2.0",
@@ -28,14 +32,10 @@
     "postgres": "^1.0.2",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
-    "react-bootstrap-country-select": "^0.7.12",
-    "react-country-region-selector": "^3.1.0",
     "react-dom": "17.0.2",
     "react-multi-carousel": "^2.6.3",
-    "react-select-country-list": "^2.2.3",
     "react-slideshow-image": "^3.4.6",
-    "select": "^1.1.2",
-    "slugify": "^1.5.3"
+    "select": "^1.1.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "10.2.2",
