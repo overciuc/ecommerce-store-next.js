@@ -510,11 +510,7 @@ export default function About(props) {
         <div css={ourTeamGrid}>
           <div>
             <div>
-              <img
-                src="/images/aboutImage.jpg"
-                alt="about"
-                css={ourTeamImageStyle}
-              />
+              <img src="/images/olga.png" alt="about" css={ourTeamImageStyle} />
               <p>
                 <span css={floatLeft}>Olga</span>
                 <span css={floatRight}>The Creator</span>
@@ -550,7 +546,7 @@ export default function About(props) {
           <div>
             <div>
               <img
-                src="/images/nastya.jpg"
+                src="/images/nastja.png"
                 alt="about"
                 css={ourTeamImageStyle}
               />

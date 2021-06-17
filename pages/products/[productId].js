@@ -210,10 +210,7 @@ export default function SingleProduct(props) {
 
   const [totalPrice, setTotalPrice] = useState(generalPrice);
 
-  const [shoppingBasket, setShoppingBasket] = useState(getBasketCookieValue());
-
-  const [addToCart, setAddToCart] = useState(false);
-  console.log(`Add to cart button click ? ${addToCart}`);
+  const [shoppingCart, setShoppingCart] = useState(getBasketCookieValue());
 
   function incrementQuantity() {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -296,7 +293,7 @@ export default function SingleProduct(props) {
               data-cy="product-page-addToCart-button"
               onClick={() => {
                 getBasketCookieValue();
-                setShoppingBasket(
+                setShoppingCart(
                   toggleAddedProductByProductId(props.product.id, quantity),
                 );
               }}

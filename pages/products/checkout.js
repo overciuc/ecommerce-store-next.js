@@ -62,6 +62,7 @@ const tableSection = css`
   display: flex;
   width: 100%;
   top: 0;
+  margin-top: 20px;
   > table {
     border-collapse: collapse;
   }
@@ -104,7 +105,7 @@ const productGrid = css`
     text-align: left;
     max-width: 650px;
     display: block;
-    margin: auto;
+    //margin: auto;
   }
 `;
 
@@ -388,7 +389,10 @@ export default function Checkout(props) {
               <div>
                 <label data-cy="checkout-page-label">
                   Credit card number:
-                  <input data-cy="checkout-page-input" placeholder="eg. 1234 5678 9101 1121" />
+                  <input
+                    data-cy="checkout-page-input"
+                    placeholder="eg. 1234 5678 9101 1121"
+                  />
                 </label>
               </div>
               <div>
