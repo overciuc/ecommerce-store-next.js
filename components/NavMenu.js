@@ -4,8 +4,6 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import { faSearch, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import { useState } from 'react';
-import { getBasketCookieValue } from '../util/cookies';
 
 config.autoAddCss = false;
 
@@ -74,9 +72,7 @@ const marginLeft = css`
   margin-left: 200px;
 `;
 
-export default function NavMenu() {
-  const [shoppingCart, setShoppingCart] = useState(getBasketCookieValue());
-
+export default function NavMenu(props) {
   return (
     <div css={containerStyles}>
       <div css={navigationMenu}>
@@ -102,7 +98,7 @@ export default function NavMenu() {
         <span css={[navBarButtonStyle, marginLeft]}>
           <Link href="/products/basket">
             <a data-cy="nav-menu-shoppingCart">
-              {Object.entries(shoppingCart)
+              {Object.entries(props.shoppingCart)
                 .map(([id, quantity]) => quantity)
                 .reduce(
                   (accumulator, currentValue) => accumulator + currentValue,

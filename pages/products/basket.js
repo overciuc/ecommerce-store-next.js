@@ -228,6 +228,7 @@ export default function Basket(props) {
     });
     setProductQuantities(newProductQuantities);
     setTotalPrice((prevPrice) => prevPrice + getProductById(productId).price);
+    props.setShoppingCart(getBasketCookieValue());
   }
 
   function decrementQuantity(productId) {
@@ -240,6 +241,7 @@ export default function Basket(props) {
     });
     setProductQuantities(newProductQuantities);
     setTotalPrice((prevPrice) => prevPrice - getProductById(productId).price);
+    props.setShoppingCart(getBasketCookieValue());
   }
 
   return (
@@ -250,7 +252,7 @@ export default function Basket(props) {
       <Head>
         <title>Cart</title>
       </Head>
-      <NavMenu setShoppingCart={props.setShoppingCart} />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={checkoutHeading}>
         <span>
           <h1 data-cy="basket-page-h1">Shopping Cart</h1>
@@ -337,6 +339,7 @@ export default function Basket(props) {
                       onClick={() => {
                         removeProductFromShoppingCart(productId);
                         setCookieBasketValue(getBasketCookieValue());
+                        props.setShoppingCart(getBasketCookieValue());
                       }}
                     >
                       x

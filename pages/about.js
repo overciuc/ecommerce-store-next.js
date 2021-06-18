@@ -395,7 +395,7 @@ export default function About(props) {
       <Head>
         <title>About</title>
       </Head>
-      <NavMenu />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={checkoutHeading}>
         <span>
           <h1>About Us</h1>

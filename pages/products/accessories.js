@@ -132,7 +132,7 @@ export default function Accessories(props) {
       <Head>
         <title>Accessories</title>
       </Head>
-      <NavMenu />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={checkoutHeading}>
         <span>
           <h1>Accessories</h1>

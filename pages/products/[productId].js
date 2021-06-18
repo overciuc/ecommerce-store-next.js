@@ -229,7 +229,7 @@ export default function SingleProduct(props) {
       <Head>
         <title>{props.product.productName}</title>
       </Head>
-      <NavMenu />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={checkoutHeading}>
         <span>
           <h1>Product</h1>
@@ -298,10 +298,6 @@ export default function SingleProduct(props) {
                 );
               }}
             >
-              {/*
-              {props.product.id in shoppingBasket
-                ? 'Remove from Basket'
-                : 'Add to Basket'}*/}
               Add to Basket
             </button>
           </span>

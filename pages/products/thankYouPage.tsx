@@ -171,7 +171,7 @@ export default function ContactUs(props: any) {
       <Head>
         <title>Success!</title>
       </Head>
-      <NavMenu />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={contactUsHeading}>
         <span>
           <h1 data-cy="thank-you-page-h1">Thank You</h1>

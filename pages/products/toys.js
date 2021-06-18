@@ -135,7 +135,7 @@ export default function Toys(props) {
       <Head>
         <title>Toys</title>
       </Head>
-      <NavMenu />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={checkoutHeading}>
         <span>
           <h1 data-cy="toys-page-h1">Toys</h1>

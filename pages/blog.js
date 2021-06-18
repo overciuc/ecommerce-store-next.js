@@ -185,7 +185,7 @@ export default function Blog(props) {
       <Head>
         <title>Blog</title>
       </Head>
-      <NavMenu />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={checkoutHeading}>
         <span>
           <h1>Our Blog</h1>

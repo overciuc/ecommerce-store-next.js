@@ -78,6 +78,7 @@ const logoStyles = css`
 `;
 const faIconStyle = css`
   font-size: 20px;
+  margin-left: 10px;
 `;
 
 const marginLeft = css`
@@ -287,6 +288,12 @@ export default function Home(props) {
           <span css={[navBarButtonStyle, marginLeft]}>
             <Link href="/products/basket">
               <a>
+                {Object.entries(props.shoppingCart)
+                  .map(([id, quantity]) => quantity)
+                  .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0,
+                  )}
                 <FontAwesomeIcon icon={faShoppingBasket} css={faIconStyle} />
               </a>
             </Link>

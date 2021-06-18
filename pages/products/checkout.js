@@ -105,18 +105,9 @@ const productGrid = css`
     text-align: left;
     max-width: 650px;
     display: block;
-    //margin: auto;
   }
 `;
-/*
-const detailsFormBackground = css`
-  background-color: rgba(254, 228, 65, 0.5);
-  min-height: 500px;
-  margin-top: -30px;
-  float: left;
-  max-width: 500px;
-`;
-*/
+
 const detailsForm = css`
   justify-content: left;
   padding-left: 20px;
@@ -292,7 +283,7 @@ export default function Checkout(props) {
       <Head>
         <title>Checkout</title>
       </Head>
-      <NavMenu />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={checkoutHeading}>
         <span>
           <h1 data-cy="checkout-page-h1">Checkout</h1>

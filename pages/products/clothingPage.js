@@ -138,7 +138,7 @@ export default function ClothingPage(props) {
       <Head>
         <title>Home</title>
       </Head>
-      <NavMenu />
+      <NavMenu shoppingCart={props.shoppingCart} />
       <div css={checkoutHeading}>
         <span>
           <h1>Clothing</h1>
