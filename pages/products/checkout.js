@@ -23,10 +23,10 @@ const checkoutHeading = css`
 
   > span > h1 {
     width: 1300px;
-    font-size: 20px;
+    font-size: 40px;
     font-weight: bold;
     color: #fff;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-family: 'Gorditas', cursive;
     padding-top: 20px;
     text-align: left;
