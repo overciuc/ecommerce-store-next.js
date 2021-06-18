@@ -204,21 +204,25 @@ const counter = css`
 `;
 
 export default function SingleProduct(props) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [generalPrice, setGeneralPrice] = useState(props.product.price);
 
   const [quantity, setQuantity] = useState(1);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [totalPrice, setTotalPrice] = useState(generalPrice);
 
-  const [shoppingCart, setShoppingCart] = useState(getBasketCookieValue());
+  // const [shoppingCart, setShoppingCart] = useState(getBasketCookieValue());
 
   function incrementQuantity() {
     setQuantity((prevQuantity) => prevQuantity + 1);
     setTotalPrice((prevPrice) => prevPrice + generalPrice);
+    props.setShoppingCart(getBasketCookieValue());
   }
   function decrementQuantity() {
     setQuantity((prevQuantity) => prevQuantity - 1);
     setTotalPrice((prevPrice) => prevPrice - generalPrice);
+    props.setShoppingCart(getBasketCookieValue());
   }
 
   return (
@@ -292,10 +296,9 @@ export default function SingleProduct(props) {
             <button
               data-cy="product-page-addToCart-button"
               onClick={() => {
-                getBasketCookieValue();
-                setShoppingCart(
-                  toggleAddedProductByProductId(props.product.id, quantity),
-                );
+                // getBasketCookieValue();
+                props.setShoppingCart(getBasketCookieValue());
+                toggleAddedProductByProductId(props.product.id, quantity);
               }}
             >
               Add to Basket
