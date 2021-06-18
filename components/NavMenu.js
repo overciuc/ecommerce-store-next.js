@@ -17,7 +17,7 @@ const logo = css`
 
 const containerStyles = css`
   margin-top: -25px;
-  height: 200px;
+  height: 150px;
   width: 100%;
   background-color: #249af0;
   z-index: -10;
@@ -30,7 +30,7 @@ const navigationMenu = css`
   justify-content: center;
   margin-top: 20px;
   padding: 55px 15px;
-  margin-left: 200px;
+  margin-left: 100px;
   margin-right: 20px;
 `;
 
@@ -74,8 +74,7 @@ const marginLeft = css`
 `;
 
 export default function NavMenu() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [shoppingCart, setShoppingCart] = useState(getBasketCookieValue);
+  const [shoppingCart, setShoppingCart] = useState(getBasketCookieValue());
 
   return (
     <div css={containerStyles}>
@@ -103,11 +102,19 @@ export default function NavMenu() {
           <Link href="/products/basket">
             <a data-cy="nav-menu-shoppingCart">
               <FontAwesomeIcon icon={faShoppingBasket} css={faIconStyle} />
+              {Object.entries(shoppingCart)
+                .map(([id, quantity]) => quantity)
+                .reduce(
+                  (accumulator, currentValue) => accumulator + currentValue,
+                  0,
+                )}
             </a>
           </Link>
+
           <Link href="#1">
             <a>
-              Search <FontAwesomeIcon icon={faSearch} css={faIconStyle} />
+              Search
+              <FontAwesomeIcon icon={faSearch} css={faIconStyle} />
             </a>
           </Link>
         </span>
@@ -115,3 +122,16 @@ export default function NavMenu() {
     </div>
   );
 }
+/* export async function getServerSideProps() {
+  const { getProducts } = await import('../util/database');
+
+  const products = await getProducts();
+
+  console.log('products', products);
+
+  return {
+    props: {
+      products: products,
+    },
+  };
+} */

@@ -39,9 +39,9 @@ const navigationMenu = css`
   max-width: 1300px;
   justify-content: center;
   margin-top: 20px;
-  padding: 25px 15px;
-  margin-left: 300px;
-  margin-right: 100px;
+  padding: 55px 15px;
+  margin-left: 200px;
+  margin-right: 20px;
   z-index: 1;
 `;
 
@@ -70,7 +70,7 @@ const navBarButtonStyle = css`
 `;
 
 const logoStyles = css`
-  margin-right: 150px;
+  margin-right: 200px;
   color: #fff;
   font-family: 'Gorditas', cursive;
   font-size: 30px;
@@ -85,7 +85,7 @@ const marginLeft = css`
 `;
 
 const paragraphSection = css`
-  background-color: rgba(93, 189, 9, 0.2);
+  background-color: rgba(21, 255, 0, 0.3);
   width: 100%;
   height: 300px;
   justify-content: center;
@@ -191,7 +191,7 @@ const newsletterBackground = css`
   display: flex;
   justify-content: center;
   position: relative;
-  background-color: #acd17a;
+  background-color: #15ff004d;
 
   ::before {
     background-image: url('/random.jpg');
@@ -292,7 +292,8 @@ export default function Home(props) {
             </Link>
             <Link href="/products/clothingPage">
               <a>
-                Search <FontAwesomeIcon icon={faSearch} css={faIconStyle} />
+                Search
+                <FontAwesomeIcon icon={faSearch} css={faIconStyle} />
               </a>
             </Link>
           </span>

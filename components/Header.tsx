@@ -35,13 +35,13 @@ export default function Header() {
       <Link href="/products/allProductsPage">
         <a data-cy="header-shop-link">Shop</a>
       </Link>
-      <Link href="/products/blog">
+      <Link href="/blog">
         <a data-cy="header-blog-link">Blog</a>
       </Link>
       <Link href="/about">
         <a>About</a>
       </Link>
-      <Link href="/products/contact">
+      <Link href="/contact">
         <a>Contact</a>
       </Link>
     </header>
