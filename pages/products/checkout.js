@@ -108,17 +108,25 @@ const productGrid = css`
     //margin: auto;
   }
 `;
-
+/*
 const detailsFormBackground = css`
   background-color: rgba(254, 228, 65, 0.5);
   min-height: 500px;
   margin-top: -30px;
   float: left;
+  max-width: 500px;
 `;
-
+*/
 const detailsForm = css`
   justify-content: left;
   padding-left: 20px;
+  padding-right: 20px;
+  background-color: rgba(254, 228, 65, 0.5);
+  min-height: 500px;
+  margin-top: -30px;
+  float: left;
+  max-width: 600px;
+
   > h3 {
     font-family: 'Gorditas', cursive;
     font-size: 24px;
@@ -226,7 +234,6 @@ const totalCostStyles = css`
   color: gray;
   vertical-align: middle;
   font-family: 'Baloo Tammudu 2', cursive;
-
   padding-bottom: 0px;
 `;
 
@@ -234,7 +241,6 @@ const total = css`
   font-weight: bold;
   font-family: 'Baloo Tammudu 2', cursive;
   font-size: 30px;
-
   vertical-align: middle;
   padding-bottom: 0px;
 `;
@@ -242,10 +248,10 @@ const total = css`
 const checkoutButton = css`
   margin-bottom: 20px;
   padding-bottom: 60px;
-  padding-right: 20px;
+  margin-right: 50px;
   > a {
     background-color: #00bbf9;
-    width: 500px;
+    width: 400px;
     color: #fff;
     padding: 8px 20px;
     border-radius: 25px;
@@ -341,7 +347,7 @@ export default function Checkout(props) {
               </tr>
             </table>
           </div>
-          <div css={detailsFormBackground}>
+          <div>
             <div css={detailsForm}>
               <h3 data-cy="checkout-page-h3">Billing and Shipping Details</h3>
               <p>Please fill in all required (*) fields.</p>

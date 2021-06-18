@@ -30,7 +30,7 @@ const navigationMenu = css`
   justify-content: center;
   margin-top: 20px;
   padding: 55px 15px;
-  margin-left: 100px;
+  margin-left: 270px;
   margin-right: 20px;
 `;
 
@@ -67,6 +67,7 @@ const logoStyles = css`
 
 const faIconStyle = css`
   font-size: 20px;
+  margin-left: 10px;
 `;
 
 const marginLeft = css`
@@ -101,13 +102,13 @@ export default function NavMenu() {
         <span css={[navBarButtonStyle, marginLeft]}>
           <Link href="/products/basket">
             <a data-cy="nav-menu-shoppingCart">
-              <FontAwesomeIcon icon={faShoppingBasket} css={faIconStyle} />
               {Object.entries(shoppingCart)
                 .map(([id, quantity]) => quantity)
                 .reduce(
                   (accumulator, currentValue) => accumulator + currentValue,
                   0,
                 )}
+              <FontAwesomeIcon icon={faShoppingBasket} css={faIconStyle} />
             </a>
           </Link>
 
