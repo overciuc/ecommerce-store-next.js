@@ -289,6 +289,7 @@ export default function Home(props) {
             <Link href="/products/basket">
               <a>
                 {Object.entries(props.shoppingCart)
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   .map(([id, quantity]) => quantity)
                   .reduce(
                     (accumulator, currentValue) => accumulator + currentValue,

@@ -119,6 +119,8 @@ const deleteButtonStyle = css`
   font-size: 30px;
   font-weight: bold;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
   :hover {
     color: red;
   }

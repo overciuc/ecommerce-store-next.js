@@ -269,6 +269,7 @@ export default function Checkout(props) {
     return props.products.find((product) => product.id === parseInt(productId));
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [totalPrice, setTotalPrice] = useState(
     Object.entries(getBasketCookieValue())
       .map(([id, quantity]) => getProductById(id).price * quantity)
