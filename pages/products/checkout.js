@@ -13,7 +13,7 @@ config.autoAddCss = false;
 
 const checkoutHeading = css`
   width: 100%;
-  height: 200px;
+  height: 150px;
   background-color: #249af0;
   margin: auto;
   margin-top: -50px;
@@ -23,12 +23,12 @@ const checkoutHeading = css`
 
   > span > h1 {
     width: 1300px;
-    font-size: 50px;
+    font-size: 20px;
     font-weight: bold;
     color: #fff;
     margin-bottom: 40px;
     font-family: 'Gorditas', cursive;
-    padding-top: 50px;
+    padding-top: 20px;
     text-align: left;
     border-top: 1px solid #fff;
   }
